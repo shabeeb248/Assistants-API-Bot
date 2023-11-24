@@ -76,7 +76,7 @@ if "thread_id" not in st.session_state:
 if 'selected_items' not in st.session_state:
     st.session_state['selected_items'] = []
 
-
+message_history=None
 # Set up the Streamlit page with a title and icon
 st.set_page_config(page_title="ChatGPT-like Chat App", page_icon=":speech_balloon:")
 
