@@ -185,7 +185,11 @@ if PINECONE_API_KEY and PINECONE_API_ENV:
     environment=PINECONE_API_ENV)
     index_name="bottest"
     create_pinecone_index(index_name)
-    unique_filenames_list=get_file_name_pinecone()
+try:     
+ unique_filenames_list=get_file_name_pinecone()
+except:
+  unique_filenames_list=[]   
+
 
 
 # Sidebar option for users to upload their own files
