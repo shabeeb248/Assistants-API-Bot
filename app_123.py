@@ -5,9 +5,17 @@ from bs4 import BeautifulSoup
 import requests
 import pdfkit
 import time
-
+import json
+import pandas as pd
+import numpy as np
+# Opening JSON file
+f = open('data.json')
+ 
+# returns JSON object as 
+# a dictionary
+json_data = json.load(f)
 # Set your OpenAI Assistant ID here
-assistant_id = 'asst_Enter your assistant ID here'
+assistant_id = 'asst_YnqT91WDZ44kAyyzxLlxtFtj'
 
 # Initialize the OpenAI client (ensure to set your API key in the sidebar within the app)
 client = openai
@@ -65,7 +73,7 @@ if st.sidebar.button("Scrape and Upload"):
     #st.sidebar.write(f"File ID: {file_id}")
 
 # Sidebar option for users to upload their own files
-uploaded_file = st.sidebar.file_uploader("Upload a file to OpenAI embeddings", key="file_uploader")
+uploaded_file = st.sidebar.file_uploader("Upload a file to OpenAI embeddings", key="file_uploader",accept_multiple_files=True)
 
 # Button to upload a user's file and store the file ID
 if st.sidebar.button("Upload File"):
@@ -132,6 +140,28 @@ def process_message_with_citations(message):
 st.title("OpenAI Assistants API Chat")
 st.write("This is a simple chat application that uses OpenAI's API to generate responses.")
 
+data = [['Category 1', "SubCategory 1",'Company 1 reesponse','hh'], ['','','gasifda','yudwgau'], ['','','Hello', 14]] 
+st.snow()
+# Create the pandas DataFrame 
+df = pd.DataFrame(data, columns=['Category', 'Subcategory','Company 1','Company 2']) 
+st.table(df)
+
+# col1, col2, col3,col4 = st.columns(4)
+
+# with col1:
+#    st.write("Category")
+#    st.write("Category gfuiahfij fijfnijwf")
+#    st.divider()
+#    st.write('GP-level Policies & Procedures')
+# #    st.image("https://static.streamlit.io/examples/cat.jpg")
+
+# with col2:
+#    st.write("SubCategory")
+# #    st.image("https://static.streamlit.io/examples/dog.jpg")
+
+# with col3:
+#    st.write("An owl")
+#    st.image("https://static.streamlit.io/examples/owl.jpg")
 # Only show the chat interface if the chat has been started
 if st.session_state.start_chat:
     # Initialize the model and messages list if not already in session state
