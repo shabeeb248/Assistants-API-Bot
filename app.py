@@ -27,7 +27,6 @@ from langchain.schema import (
     SystemMessage
 )
 
-connection_string = "mongodb+srv://user1:fazna@cluster0.rbfdb.mongodb.net/?retryWrites=true&w=majority"
 
 promptText=""""
 
@@ -62,9 +61,6 @@ Your role is to be a reliable intermediary between the user and the information 
   Final answer:"""
 
 
-message_history = MongoDBChatMessageHistory(
-    connection_string=connection_string, session_id="test-session"
-)
 
 
 text_splitter = RecursiveCharacterTextSplitter(chunk_size=2500, chunk_overlap=250)
@@ -163,6 +159,13 @@ def upload_vector_to_pinecone(data,name_file):
         })
   Pinecone.from_texts([t.page_content for t in texts], embeddings, index_name=index_name, metadatas=metadatas)
 
+# Create a sidebar for MongoDB key configuration 
+st.sidebar.header("MongoDB Configuration")
+connection_string = st.sidebar.text_input("Enter your MongoDB Connection String", type="password")
+if connection_string:
+    message_history = MongoDBChatMessageHistory(
+    connection_string=connection_string, session_id="test-session"
+)
 
 # Create a sidebar for OpenAI key configuration 
 st.sidebar.header("Opean ai Configuration")
@@ -175,6 +178,7 @@ if api_key_openai:
 st.sidebar.header("Pinecone Configuration")
 PINECONE_API_KEY = st.sidebar.text_input("Enter your Pinecone API key", type="password")
 PINECONE_API_ENV = st.sidebar.text_input("Enter your Pinecone Environment", type="password")
+unique_filenames_list=[]
 if PINECONE_API_KEY and PINECONE_API_ENV:
     pinecone.init(
     api_key=PINECONE_API_KEY,
@@ -199,16 +203,9 @@ if st.sidebar.button("Upload File"):
             file_name=file.name
             file_name_list_new.append(file_name)
             upload_vector_to_pinecone(data,file_name)
-            background_color = "#ffffff"  
-            text_color = "#000000"  
-            st.sidebar.markdown(
-                f"<div style='background-color: {background_color}; color: {text_color}; padding: 10px;'>{file_name}</div>", 
-                unsafe_allow_html=True
-        )
-            os.remove(file.name)
+           
 
 # get filenames
-
 unique_filenames_list_final=list(dict.fromkeys(unique_filenames_list+file_name_list_new))
 
 def update_selected_items():
