@@ -161,7 +161,7 @@ def upload_vector_to_pinecone(data,name_file):
 
 # Create a sidebar for MongoDB key configuration 
 st.sidebar.header("MongoDB Configuration")
-connection_string = st.sidebar.text_input("Enter your MongoDB Connection String", type="password")
+connection_string = st.sidebar.text_input("Enter your MongoDB Connection String", type="password",value="mongodb+srv://user1:fazna@cluster0.rbfdb.mongodb.net/?retryWrites=true&w=majority")
 if connection_string:
     message_history = MongoDBChatMessageHistory(
     connection_string=connection_string, session_id="test-session"
@@ -176,8 +176,8 @@ if api_key_openai:
 
 # Create a sidebar for Pinecone key configuration 
 st.sidebar.header("Pinecone Configuration")
-PINECONE_API_KEY = st.sidebar.text_input("Enter your Pinecone API key", type="password")
-PINECONE_API_ENV = st.sidebar.text_input("Enter your Pinecone Environment", type="password")
+PINECONE_API_KEY = st.sidebar.text_input("Enter your Pinecone API key", type="password",value="d67e5a88-eab3-4c3d-afea-131c72b4d15b")
+PINECONE_API_ENV = st.sidebar.text_input("Enter your Pinecone Environment", type="password",value="asia-southeast1-gcp-free")
 unique_filenames_list=[]
 if PINECONE_API_KEY and PINECONE_API_ENV:
     pinecone.init(
